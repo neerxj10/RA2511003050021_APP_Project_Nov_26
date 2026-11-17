@@ -431,7 +431,7 @@ async function toggleCamera() {
             ocrStatus.textContent = "Requesting camera access...";
             
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment", width: { ideal: 1280 }, height: { ideal: 720 } } });
                 streamRef = stream;
                 video.srcObject = stream;
                 video.play().catch(e => console.log(e));
@@ -443,7 +443,7 @@ async function toggleCamera() {
                 toggleBtn.style.border = "1px solid rgba(239, 68, 68, 0.3)";
                 ocrStatus.textContent = "Camera active. Auto-scanning...";
                 
-                scanInterval = setInterval(performOCRScan, 3000);
+                scanInterval = setInterval(performOCRScan, 2000);
             } catch (error) {
                 console.error("Camera Error:", error);
                 ocrStatus.textContent = "Camera error: " + error.name;
@@ -469,10 +469,31 @@ async function performOCRScan() {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    // --- IMAGE PREPROCESSING FOR BETTER OCR ---
+    // Convert to grayscale and increase contrast to help Tesseract detect plate text
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imgData.data;
+    for (let i = 0; i < data.length; i += 4) {
+        // Grayscale conversion
+        const gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
+        // Increase contrast (stretch histogram)
+        const contrast = 1.5; // contrast factor
+        const adjusted = Math.min(255, Math.max(0, ((gray - 128) * contrast) + 128));
+        // Apply binary threshold for plate-like regions
+        const val = adjusted > 130 ? 255 : 0;
+        data[i] = val;
+        data[i+1] = val;
+        data[i+2] = val;
+    }
+    ctx.putImageData(imgData, 0, 0);
     const imageData = canvas.toDataURL('image/png');
 
     try {
-        const result = await Tesseract.recognize(imageData, 'eng');
+        const result = await Tesseract.recognize(imageData, 'eng', {
+            tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',
+            tessedit_pageseg_mode: '7'  // Treat image as a single text line
+        });
         let rawText = result.data.text.toUpperCase().replace(/[^A-Z0-9]/g, '');
         
         const overlayCtx = overlayCanvas.getContext('2d');
@@ -660,7 +681,7 @@ async function toggleQRScanner() {
             html5QrcodeScanner = new Html5Qrcode("qr-reader");
         }
         html5QrcodeScanner.start(
-            { facingMode: "user" },
+            { facingMode: "environment" },
             { fps: 10, qrbox: { width: 300, height: 300 } },
             (decodedText, decodedResult) => {
                 const registeredBuses = JSON.parse(localStorage.getItem('app_buses')) || [];

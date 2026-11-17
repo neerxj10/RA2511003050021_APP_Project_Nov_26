@@ -9,6 +9,29 @@ A high-speed, dual-mode automated vehicle transit monitoring and access manageme
 
 ---
 
+## 🎓 Academic Project Information
+
+- **Course ID:** `21CSC203P`
+- **Course Name:** Advanced Programming Practice
+- **Academic Year:** 2026–2027
+- **Department:** Department of Computer Science and Engineering (CSE)
+- **Section:** A
+
+### 👨‍🏫 Mentor Details
+- **Mentor Full Name:** Dr. S. Shargunam
+- **Designation:** Assistant Professor (Subject Handling Faculty)
+
+### 👥 Team Members' Details
+
+| S.No | Full Name | Register Number | Department | Section | Academic Year |
+| :---: | :--- | :---: | :---: | :---: | :---: |
+| 1 | **M Neeraj Koushik** | `RA2511003050021` | CSE | A | 2026–2027 |
+| 2 | **Ashwath K G** | `RA2511003050120` | CSE | A | 2026–2027 |
+| 3 | **Iman Mahmood S** | `RA2511003050034` | CSE | A | 2026–2027 |
+| 4 | **Jayasanthosh B** | `RA2511003050049` | CSE | A | 2026–2027 |
+
+---
+
 ## 🏛️ System Architecture
 
 CampBus follows a decoupled three-tier layered architecture:
@@ -163,9 +186,17 @@ Open **`http://localhost:5500`** in your browser.
 
 ---
 
-## 👥 Authors
+## 👥 Team & Mentorship
 
-- **M Neeraj Koushik** (`RA2511003050021`)
-- **Ashwath K G** (`RA2511003050120`)
-- **Iman Mahmood S** (`RA2511003050034`)
-- **Jayasanthosh B** (`RA2511003050049`)
+### 👨‍🏫 Mentor
+- **Dr. S. Shargunam**
+  - **Designation:** Assistant Professor (Subject Handling Faculty)
+  - **Department:** Department of Computer Science and Engineering, SRM Institute of Science and Technology
+
+### 👨‍💻 Student Team Members
+| S.No | Full Name | Register Number | Department | Section | Academic Year |
+| :---: | :--- | :---: | :---: | :---: | :---: |
+| 1 | **M Neeraj Koushik** | `RA2511003050021` | CSE | A | 2026–2027 |
+| 2 | **Ashwath K G** | `RA2511003050120` | CSE | A | 2026–2027 |
+| 3 | **Iman Mahmood S** | `RA2511003050034` | CSE | A | 2026–2027 |
+| 4 | **Jayasanthosh B** | `RA2511003050049` | CSE | A | 2026–2027 |
